@@ -1,0 +1,31 @@
+In Node.js, you can achieve parallel execution using the child_process module, which allows you to spawn child processes. The fork method is particularly useful because it creates a new Node.js process and establishes a communication channel with the parent process.
+
+Here’s a step-by-step guide on how to use child_process.fork to implement multi-threading in Node.js:
+
+##### Step 1: Create the Worker Script #####
+First, you need a separate script that will be run by the child process. Let's create a simple worker script named worker.js.
+In the worker.js file script listens for a message from the parent process. When it receives the message 'start', it performs a heavy computation and sends the result back to the parent process.
+
+##### Step 2: Create the Main Script #####
+Now, create the main script (main.js) that will spawn child processes using fork. Let's call this script main.js.
+
+## Explanation:- ## 
+
+1. Main Script (main.js):
+. The fork method is used to create a child process running worker.js.
+. The parent process sends a 'start' message to the child process to begin computation.
+. The parent process listens for messages from the child process and handles results, errors, and exits appropriately.
+. The createChildProcess function returns a Promise that resolves when the child process sends back the result and rejects on error or non-zero exit code.
+. The run function uses Promise.all to create and wait for multiple child processes to complete.
+
+2. Worker Script (worker.js):
+. Listens for the 'message' event to start the computation.
+. Performs a heavy computation (summing numbers in this example).
+. Sends the result back to the parent process.
+
+## Running the Example ##
+Save both scripts and run the main script using Node.js:
+node main.js
+
+## Summary ##
+Using child_process.fork, you can create multiple child processes in Node.js to perform tasks in parallel, effectively utilizing multiple CPU cores. This approach helps in achieving multi-threading-like behavior in a single-threaded Node.js environment.
